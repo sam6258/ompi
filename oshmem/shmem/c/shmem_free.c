@@ -41,7 +41,12 @@ static inline void _shfree(void* ptr)
 {
     int rc;
 
-    RUNTIME_CHECK_INIT(); RUNTIME_CHECK_ADDR(ptr);
+    RUNTIME_CHECK_INIT();
+    if (ptr == NULL) {
+        return OSHMEM_SUCCESS;
+    }
+
+    RUNTIME_CHECK_ADDR(ptr);
 
 #if OSHMEM_SPEC_COMPAT == 1
     shmem_barrier_all();
